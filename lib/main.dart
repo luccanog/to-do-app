@@ -35,14 +35,41 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var newTastkCtrl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('To do List')),
-        body: ListView.builder(
-          itemCount: widget.items.length,
-          itemBuilder: (BuildContext context, int index) {
-          return Text(widget.items[index].title);
-        }));
+      appBar: AppBar(
+        title: TextFormField(
+          keyboardType: TextInputType.text,
+          controller: newTastkCtrl,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+          ),
+          decoration: InputDecoration(
+            labelText: "Nova tarefa",
+            labelStyle: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+      body: ListView.builder(
+        itemCount: widget.items.length,
+        itemBuilder: (BuildContext context, int index) {
+          final item = widget.items[index];
+          return CheckboxListTile(
+            title: Text(item.title),
+            key: Key(index.toString()),
+            value: item.done,
+            onChanged: (value) {
+              setState(() {
+                item.done = value;
+              });
+            },
+          );
+        },
+      ),
+    );
   }
 }

@@ -25,9 +25,6 @@ class HomePage extends StatefulWidget {
 
   HomePage() {
     items = [];
-    items.add(Item(title: "Item 1", done: false));
-    items.add(Item(title: "Item 2", done: true));
-    items.add(Item(title: "Item 3", done: false));
   }
 
   @override
@@ -36,6 +33,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var newTastkCtrl = TextEditingController();
+
+  void add() {
+    if (newTastkCtrl.text.isEmpty) return;
+    setState(() {
+      widget.items.add(
+        Item(
+          title: newTastkCtrl.text,
+          done: false,
+        ),
+      );
+      newTastkCtrl.clear();
+    });
+  }
+
+  void remove(index) {
+    widget.items.removeAt(index);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,17 +72,28 @@ class _HomePageState extends State<HomePage> {
         itemCount: widget.items.length,
         itemBuilder: (BuildContext context, int index) {
           final item = widget.items[index];
-          return CheckboxListTile(
-            title: Text(item.title),
+          return Dismissible(
+            child: CheckboxListTile(
+              title: Text(item.title),
+              value: item.done,
+              onChanged: (value) {
+                setState(() {
+                  item.done = value;
+                });
+              },
+            ),
             key: Key(index.toString()),
-            value: item.done,
-            onChanged: (value) {
-              setState(() {
-                item.done = value;
-              });
+            background: Container(color: Colors.red),
+            onDismissed: (direction) {
+              remove(index);
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: add,
+        child: Icon(Icons.add),
+        backgroundColor: Colors.orange,
       ),
     );
   }

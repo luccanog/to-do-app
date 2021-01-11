@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+import 'models/item.dart';
 
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'To do App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
+        primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomePage(),
@@ -19,13 +20,29 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  var items = new List<Item>();
+
+  HomePage() {
+    items = [];
+    items.add(Item(title: "Item 1", done: false));
+    items.add(Item(title: "Item 2", done: true));
+    items.add(Item(title: "Item 3", done: false));
+  }
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Container(
-        child: Center(child: Text("Olá mundo"))),
-    );
+        appBar: AppBar(title: Text('To do List')),
+        body: ListView.builder(
+          itemCount: widget.items.length,
+          itemBuilder: (BuildContext context, int index) {
+          return Text(widget.items[index].title);
+        }));
   }
 }

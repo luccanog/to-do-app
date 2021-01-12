@@ -112,6 +112,7 @@ class _HomePageState extends State<HomePage> {
                   save();
                 });
               },
+              activeColor: Colors.orange,
             ),
             key: Key(item.title),
             background: Container(color: Colors.red),

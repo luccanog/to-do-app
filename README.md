@@ -1,6 +1,6 @@
 # ToDoApp
 
-A new Flutter project.
+Primeiro projeto em flutter. App de To Do do curso introdutório do balta.io .
 
 ## Getting Started
 

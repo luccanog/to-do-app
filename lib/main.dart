@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'To do App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomePage(),
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                 });
               },
             ),
-            key: Key(index.toString()),
+            key: Key(item.title),
             background: Container(color: Colors.red),
             onDismissed: (direction) {
               remove(index);
